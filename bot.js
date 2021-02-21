@@ -76,7 +76,7 @@ client.on("message", msg => {
         if (args[0] < 1) return msg.reply("메세지를 지울 값을 1보다 작게 하시면 안되요!") // integer>=1
         if (args[0] > 10) return msg.reply("메세지를 지울 값이 10보다 크면 메세지가 안지워져요!") // undo if length > 10
 
-        msg.channel.bulkDelete(args[0]).then(msg.reply(`성공적으로 ${args[0]}개 만큼 메세지를 삭제하였습니다!`)).then(msg.channel.bulkDelete(args[0]))
+        msg.channel.bulkDelete(args[0]).then(msg.reply(`성공적으로 ${args[0]}개 만큼 메세지를 삭제하였습니다!`))
     }
     
 });
