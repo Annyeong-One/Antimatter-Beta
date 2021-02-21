@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const prefix = ">" // 우리는 이제 접두사를 추가할꺼에요! (저는 튜토야 라고 했습니다!) 접두사가 붙어야 커맨드가 실행이 될 수 있습니다!
+const prefix = ">" // prefix set
 
-client.on("ready", () => {
-    console.log(`${client.user.tag} 봇에 로그인 하였습니다!`);
+client.on("ready", () => { 
+    console.log(`logged in to ${client.user.tag}`);
 });
 client.on('message', async message => {
   if (!message.guild) return;
@@ -17,26 +17,25 @@ client.on('message', async message => {
   }
 });
 client.on("message", msg => {
-    if (!msg.guild) return; // 만약에 길드 이외 다른곳이라면 return을 사용을 해줍시다. 아래도 마찬가지이지만 return을 해주어 반응을 해주지 않는 반응을 해주는 것이에요!
-    if (msg.author.bot) return; // 여기도 마찬가지로 만약에 메세지 사용자가 봇이라면 return을 사용합시다.
-    if (msg.content.indexOf(prefix) !== 0) return; //메세지가 prefix로 시작되지 않을시 return을 사용을 해줍시다
+    if (!msg.guild) return; 
+    if (msg.author.bot) return; // 봇이 사용?
+    if (msg.content.indexOf(prefix) !== 0) return; // Prefix?
     var args = msg.content.slice(prefix.length).trim().split(/ +/g); // argument(args) 이 부분은 args를 원하는 방식으로 만들기 위한 과정이라고만 아시면 됩니다!
     var command = args.shift().toLowerCase(); //명령어를 가져올꺼에요 args의 어레이중 가장 앞부분을 가져옵니다 toLowerCase()는 대문자를 소문자로 변경시켜줍니다. Kick같은 실수를 방지할수 있죠
-    if (command === `핑`) { // 이전에 핑을 퐁으로 답변했다면 웹소켓 지연시간을 알려주는 코드로 해봅시다!
-        msg.reply(`퐁! 현재 Antimatter Beta의 핑은 ${client.ws.ping}ms입니다.`); // CLIENT에 WS(WEBSOCKET)이라는 곳에서 PING을 구해오는 값입니다.
+    if (command === `핑`) { // 핑확인
+        msg.reply(`퐁! 현재 Antimatter Beta의 핑은 ${client.ws.ping}ms입니다.`);
     }
     if (command === `변`) {
         var embed = new Discord.MessageEmbed()
-            .setTitle("변!") // 여기는 임베드에서 타이틀로 사용됩니다!
-            .setDescription("뭐 하는 거야!") // 여기는 타이틀을 설명해주는 걸로 사용됩니다!
-            .setColor("GOLD") // 여기는 색상을 설정하는 공간인데 HEX값을 넣으셔도 됩니다! (#7239DA) "RED" 말고 다른것들도 있어요! 맨 밑에다가 적어놓을테니 확인해주세요!
-            .setFooter("이런 것도 있누") // 여기는 임베드의 밑부분에서 말머리로 사용됩니다!
+            .setTitle("변!") 
+            .setDescription("뭐 하는 거야!") // title description
+            .setColor("GOLD") // can use hex
+            .setFooter("이런 것도 있누") // footer
             .setThumbnail("https://cdn.discordapp.com/attachments/743278181112610828/812323526287556658/20210212_141937.jpg") // 여기는 임베드에서 썸네일로 불려옵니다! (URL를 넣어가 경로를 기입하면 그 경로에 있는 이미지를 불러와 썸네일로 이용되요!)
-            .setImage("https://cdn.discordapp.com/attachments/743278181112610828/812323525863669800/7e41d26.jpg") // 여기는 임베드에서 이미지로 사용되는 곳입니다. // 위에 설명이랑 같아요
-
-            .setTimestamp() // 여기는 타임스탬프를 설정하는 공간인데 비워두면 현재시각, 여기에 타임스탬프를 넣으시면 그 값에 맞는 시간으로 변환됩니다!
-            .addField("오 예", "미터법이 최고지") // 첫번째 칸은 임베드의 소제목, 두번째 칸은 임베드의 소제목의 설명하는 공간입니다! 세번째 칸은 INLINE으로 사용되는데 TRUE 하면 라인에 들어가는거고 FALSE 하면 밑라인으로 내려가게 됩니다.
-        msg.reply(embed) // EMBED를 REPLY로 답변합시다!
+            .setImage("https://cdn.discordapp.com/attachments/743278181112610828/812323525863669800/7e41d26.jpg") // mainimg
+            .setTimestamp() // empty for current time, dont fill
+            .addField("오 예", "미터법이 최고지") // footer description, 세번째 칸은 INLINE으로 사용되는데 TRUE 하면 라인에 들어가는거고 FALSE 하면 밑라인으로 내려가게 됩니다.
+        msg.reply(embed) // reply message
     }
     if (command === "help") {
         msg.reply("```\n안녕하세요, 봇 안티매터입니다.\n제 접두사는 >이에요.\n----------------------------------\n   가능한 명령어 목록\n> 와샌즈\n> 변\n> 멍청이\n> 안티매터\n> ?\n> dixdick\n> 변봇아도배해줘\n> 갸변저항\n> 오\n> 아\n> A```");
@@ -72,12 +71,12 @@ client.on("message", msg => {
     }
 
     if (command === `청소`) { // 만약에 메세지 내용이 청소라면?
-        if (!args[0]) return msg.reply("청소할 만큼의 값을 정수로 적어주세요!") // 만약에 argument가 비어있다면? 값을 적어달라고 메세지를 답변해줍시다.
-        if (!Number(args[0])) return msg.reply("메세지를 지울 값이 숫자가 아니면 안되요!") // 만약에 argument가 숫자가 아니라면 숫자로 적어달라고 답변해줍시다.
-        if (args[0] < 1) return msg.reply("메세지를 지울 값을 1보다 작게 하시면 안되요!") // 만약에 argument가 1보다 작으면 그렇게 못한다고 답변해줍시다.
-        if (args[0] > 10) return msg.reply("메세지를 지울 값이 10보다 크면 메세지가 안지워져요!") // 만약에 argument가 100보다 크면 그렇게 못한다고 답변해줍시다 (최대 100개 삭제가능.)
+        if (!args[0]) return msg.reply("청소할 만큼의 값을 정수로 적어주세요!") // undo if empty
+        if (!Number(args[0])) return msg.reply("메세지를 지울 값이 숫자가 아니면 안되요!") // integer
+        if (args[0] < 1) return msg.reply("메세지를 지울 값을 1보다 작게 하시면 안되요!") // integer>=1
+        if (args[0] > 10) return msg.reply("메세지를 지울 값이 10보다 크면 메세지가 안지워져요!") // undo if length > 10
 
-        msg.channel.bulkDelete(args[0]).then(msg.reply(`성공적으로 ${args[0]}개 만큼 메세지를 삭제하였습니다!`)) // message.channel 에서 bulkDelete 라는 것을 사용하여 수 만큼 삭제한 후 then으로 "몇개를 삭제하였다"라고 답변해줍시다.
+        msg.channel.bulkDelete(args[0]).then(msg.reply(`성공적으로 ${args[0]}개 만큼 메세지를 삭제하였습니다!`)).then(msg.channel.bulkDelete(args[0]))
     }
     
 });
