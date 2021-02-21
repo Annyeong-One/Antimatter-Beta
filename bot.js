@@ -82,7 +82,7 @@ client.on("message", msg => {
     
 });
 
-client.login("ODExOTU3ODMwMTEwMDE5NjE1.YC5wqA.mOATNZToE_-mD0kmSNPc90uwZxA")
+client.login(process.env.BOT_TOKEN)
 
 /**		
  * 영문판 (공식): https://discord.js.org/ 	
