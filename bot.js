@@ -1,27 +1,19 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const ytdl = require("ytdl-core");
 const prefix = ">" // prefix set
+var servers = {};
 
 client.on("ready", () => { 
     console.log(`logged in to ${client.user.tag}`);
 });
-client.on('message', async message => {
-  if (!message.guild) return;
-  if (message.content === '>음성채널') {
-    if (message.member.voice.channel) {
-      const connection = await message.member.voice.channel.join();
-    } 
-    else {
-      message.reply('우선 음성채널에 들어가주세요!');
-    }
-  }
-});
+
 client.on("message", msg => {
     if (!msg.guild) return; 
     if (msg.author.bot) return; // 봇이 사용?
     if (msg.content.indexOf(prefix) !== 0) return; // Prefix?
     var args = msg.content.slice(prefix.length).trim().split(/ +/g); // argument(args) 이 부분은 args를 원하는 방식으로 만들기 위한 과정이라고만 아시면 됩니다!
-    var command = args.shift().toLowerCase(); //명령어를 가져올꺼에요 args의 어레이중 가장 앞부분을 가져옵니다 toLowerCase()는 대문자를 소문자로 변경시켜줍니다. Kick같은 실수를 방지할수 있죠
+    var command = args.shift().toLowerCase();
     if (command === `핑`) { // 핑확인
         msg.reply(`퐁! 현재 Antimatter Beta의 핑은 ${client.ws.ping}ms입니다.`);
     }
@@ -38,9 +30,76 @@ client.on("message", msg => {
         msg.reply(embed) // reply message
     }
     if (command === "help") {
-        msg.reply("```\n안녕하세요, 봇 안티매터입니다.\n제 접두사는 >이에요.\n----------------------------------\n   가능한 명령어 목록\n> 와샌즈\n> 변\n> 멍청이\n> 안티매터\n> ?\n> dixdick\n> 변봇아도배해줘\n> 갸변저항\n> 오\n> 아\n> A```");
+        var embed = new Discord.MessageEmbed()
+        .setColor('DEFAULT')
+        .setTitle('Antimatter Beta 도움말')
+        .setURL('https://discord.js.org/')
+        .setAuthor('Annyeong1#8912', 'https://media.discordapp.net/attachments/805963165229776951/811130967871717430/peter20071203.gif', 'https://discord.js.org')
+        .setDescription('안티매터봇의 명령어 목록입니다.')
+        .setThumbnail('https://cdn.discordapp.com/attachments/805963165229776951/813049052685008936/Screenshot_20190301-090946.png')
+        .addField('1. 기능', '핑\n청소', true)
+        .addField('2. 음악(추가중/미지원)', '음성채널\n음성나가\n노래\n스킵\n정지', true)
+        .addField('3. 말주고받기', '변\n멍청이\n안티매터\n아\n오\n갸변저항\ndixdick\na반', true)
+        .addField('4. 이스터에그', '현재까지 숨겨진 이스터에그는 1 개,\n그중 찾은 것은 0 개입니다.', true);
+        msg.reply(embed) // reply message
     }
+    if (msg.content === ">음성채널") {
+        if (msg.member.voice.channel) {
+            const connection = msg.member.voice.channel.join();
+        } else {
+            msg.reply('우선 음성채널에 들어가주세요!');
+        }
+    }
+    if (msg.content === ">음성나가") {
+        if (msg.member.voice.channel) {
+            const connection = msg.member.voice.channel.leave();
+        } else {
+            msg.reply('우선 음성채널에 들어가주세요!');
+        }
+    }
+    if (msg.content.startsWith(`>노래`)) {
+        let args = msg.content.substring(prefix.length).split(" ");
+        if (msg.member.voice.channel) {
+            function play(connection, msg){
+                var server = servers[msg.guild.id];
+                server.dispatcher = connection.play(ytdl(server.queue[0], {filter: "audioonly"}));
+                server.queue.shift();
+                server.dispatcher.on("end", function(){
+                    if(server.queue[0]){
+                        play(connection, msg);
+                    }
+                });
+            }
+            if(!args[1])
+                msg.channel.send('뭐를 틀 지 적어주세요!');
 
+            if(!servers[msg.guild.id]) servers[msg.guild.id] = {
+                queue: []
+            }
+            var server = servers[msg.guild.id];
+
+            server.queue.push(args[1]);
+            
+
+        } else {
+            msg.reply('우선 음성채널에 들어가주세요!');
+        }
+    }
+    if (msg.content.startsWith(`>스킵`)) {
+        if (msg.member.voice.channel) {
+            skip(msg, serverQueue);
+        } else {
+            msg.reply('우선 음성채널에 들어가주세요!');
+        }
+    }
+    if (msg.content.startsWith(`>정지`)) {
+        if (msg.member.voice.channel) {
+            stop(msg, serverQueue);
+        } else {
+            msg.reply('우선 음성채널에 들어가주세요!');
+        }
+    }
+    
     if (command === "멍청이") {
         msg.reply("그것은 바로 영빈이었네요!");
     }
@@ -61,12 +120,11 @@ client.on("message", msg => {
     if (command === "갸변저항") {
         msg.reply("sd-ByunByunByun https://cdn.discordapp.com/attachments/805963165229776951/810504184163205180/SPOILER_bbbyyyuuunnn_-_Patricia_Taxxon_X_GyaByun_Resistor.mp3\n\n Aleph-Byun https://cdn.discordapp.com/attachments/805963165229776951/810504173858324480/SPOILER_Byun_-_LeaF__Optie__GyaByun_Resistor.mp3\n\n R https://cdn.discordapp.com/attachments/805963165229776951/810504149509996575/SPOILER_R_-_Plum_X_GyaByun_Resistor.mp3\n\n Byuntapper https://cdn.discordapp.com/attachments/805963165229776951/810504191591579658/SPOILER_byuntapper.mp3");
     }
-    
-    if (command === "A") {
+    if (command === "a반") {
         msg.reply("???: 아 얘들아 A형을 누가 90점을 못 맞니\n¿¿¿: 마음이 아프다");
     }
     
-    if (command === "변목길이50킬로미터") {
+    if (command === "easteregg") { // 안알려줌
         msg.reply("아아... 길이를 측정할 수 없을 만큼 깁니다... 뭐 대충 한 그 뭐냐 50km정도 되지 않을까요");
     }
 
@@ -78,10 +136,10 @@ client.on("message", msg => {
 
         msg.channel.bulkDelete(args[0]).then(msg.reply(`성공적으로 ${args[0]}개 만큼 메세지를 삭제하였습니다!`))
     }
-    
+
 });
 
-client.login(process.env.BOT_TOKEN)
+client.login('TOKEN') // 안알려줌 22
 
 /**		
  * 영문판 (공식): https://discord.js.org/ 	
