@@ -198,7 +198,7 @@ client.on("message", msg => {
         msg.channel.send("목길이 50킬로미터!");
         console.log ('hint13 returned')
     }
-    if (command === "변목길이50킬로미터") {
+    if (command === "REDACTED") {
         msg.channel.send("진짜 대단한 거 같아요, 저 정도면 서있는 것만으로 하체운동 되겠어요. 근데 어떻게 일어나죠?")
         msg.reply("제 1 번 이스터에그를 찾으셨습니다!") ;
         console.log ('Easter Egg No.1 Found!')
@@ -215,7 +215,7 @@ client.on("message", msg => {
         msg.channel.send("힌트는 2개에요, easterhelp를 봤어야죠.");
         console.log ('hint23 returned')
     }
-    if (command === "변튜브구독과좋아요알림설정") {
+    if (command === "REDACTED") {
         msg.channel.send("그 롤하는 영상도 꼭 보세요, 화질은 구려도 꽤나 하는 것 같아요.")
         msg.channel.send("*해당 발언은 안티매터봇이나 Annyeong1#8912와 관련이 없어요. ~~저는 롤을 못하기 때문이죠.~~*")
         msg.reply("제 2 번 이스터에그를 찾으셨습니다!");
@@ -233,7 +233,7 @@ client.on("message", msg => {
         msg.channel.send("(갸범의 눈이 0.5mm 정도로 작아진다! ㅡㅡ)");
         console.log ('hint33 returned')
     }
-    if (command === "샤프심만한눈") {
+    if (command === "REDACTED") {
         msg.channel.send("찌리리 눈!")
         msg.channel.send("지이이이이이이이잉\n(샤프심만한 눈은 찌리리 눈 스킬 제6스킬이다.")
         msg.reply("제 3 번 이스터에그를 찾으셨습니다!") ;
@@ -251,24 +251,24 @@ client.on("message", msg => {
         msg.channel.send("...뭔가 방광의 크기가 줄어들고 있는 느낌?");
         console.log ('hint43 returned')
     }
-    if (command === "didicdicdicdickdic") {
+    if (command === "REDACTED") {
         msg.channel.send("디딕 딕딕 디크딕!")
         msg.channel.send("화장실에 다녀왔아요! 뭔가 저기 저 키 작은 봇이 된 느낌이 들어요! @Young-re#3263")
         msg.reply("제 4 번 이스터에그를 찾으셨습니다!") ;
         console.log ('Easter Egg No.4 Found!')
     }
-    if (command === "78590423") {
+    if (command === "REDACTED") {
         msg.channel.send("호오......")
         msg.channel.send("이걸 찾누....")
         msg.channel.send("하지만 여기서 더 가려면 어떻게 해야 할까?")
-        msg.channel.send("011010000111010101101000001011000010000001101001011001000110101100100000011000100111010101110100001000000101010001000111010110100111001001000100010110010111000001110010010010100101111101011001")
+        msg.channel.send("REDACTED")
         msg.reply("제 ? 번 이스터에그를 찾지 못하셨습니다?") ;
         console.log ('Easter Egg No.5 Found!')
     }
-    if (command === "759483208452379025738904") {
+    if (command === "REDACTED") {
         msg.reply("제 0 번 이스터에그를 찾으셨습니다!") ;
         console.log ('Easter Egg No.0 Found!')
     }
 });
 
-client.login('ODMwOTc0MDk0NDA0NDg1MTgw.YHOe7g.EOw9fRPFjXHjBK3eBprk_AG0kYM')
+client.login('REDACTED')
